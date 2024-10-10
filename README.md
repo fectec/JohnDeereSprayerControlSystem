@@ -12,4 +12,8 @@ The John Deere Sprayer Control System is a computerized irrigation management so
 
 As a first approach before computerization, a PID controller was implemented using analog electronics. The physical configuration consists of a 12V DC motor placed on a base that allows aligning its rotation axis in front of an AS5600 magnetic encoder, in order to know the position of the shaft and close the loop.
 
-In the initial stage, the circuit receives the reference signal (desired value, adjusted with a potentiometer) and the signal coming from the encoder (feedback, output of the system). Both are subtracted to obtain the error signal, which is then fed to the PID. The proportional gain is intended to correct the current error, the integral gain to eliminate the error accumulated over time, and the derivative gain to anticipate future errors and smooth the system response.
+In the initial stage, the circuit receives the reference signal (desired value, adjusted with a potentiometer) and the signal coming from the encoder (feedback, output of the system). Both are subtracted to obtain the error signal, which is then fed to the PID. The proportional gain is intended to correct the current error, the integral gain to eliminate the error accumulated over time, and the derivative gain to anticipate future errors and smooth the system response. These three terms are summed to generate a fine-tuned control signal that feeds the motor. Finally, the output signal feeds back to the comparator, thus closing the loop.
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/30881e0d-5c65-45e7-87dd-a92824c35ff9" alt = "Analog PID Schematic"/>
+</p>
