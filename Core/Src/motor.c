@@ -2,9 +2,9 @@
  * motor.c
  */
 
-#include <main.h>
-#include <motor.h>
-#include <speed_control.h>
+#include "main.h"
+#include "motor.h"
+#include "speed_control.h"
 
 void Motor_Stop(void)
 {

@@ -2,8 +2,8 @@
  * speed_control.c
  */
 
-#include <main.h>
-#include <speed_control.h>
+#include "main.h"
+#include "speed_control.h"
 
 void SetMotorSpeed(uint8_t speed)
 {
