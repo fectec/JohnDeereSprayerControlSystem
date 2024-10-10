@@ -1,8 +1,5 @@
 /*
  * printf.h
- *
- *  Created on: 10 oct 2024
- *      Author: fecte
  */
 
 #ifndef INC_PRINTF_H_

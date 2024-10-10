@@ -5,6 +5,16 @@
 #include "main.h"
 #include "speed_control.h"
 
+/**
+ * @brief Set the motor speed using PWM.
+ *
+ * This function calculates the compare value for the PWM duty cycle based
+ * on the provided speed percentage. It then updates the PWM signal
+ * for TIM_CHANNEL_1 of the timer to control the motor speed.
+ *
+ * @param speed The speed percentage (0 to 100).
+ */
+
 void SetMotorSpeed(uint8_t speed)
 {
     // Calculate the compare value based on the speed

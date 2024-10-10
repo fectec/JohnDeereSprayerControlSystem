@@ -9,7 +9,6 @@ extern TIM_HandleTypeDef htim2;
 
 // Function prototypes
 
-void SetMotorSpeed(uint8_t);	// Function to set motor speed based on
-								// input scale from 0 to 100
+void SetMotorSpeed(uint8_t);
 
 #endif /* INC_SPEED_CONTROL_H_ */
