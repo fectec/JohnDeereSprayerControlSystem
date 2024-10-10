@@ -22,6 +22,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "motor.h"
+#include "encoder.h"
+#include "printf.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,6 +64,8 @@ static void MX_ADC1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
+uint16_t encoderValue;
+
 /* USER CODE END 0 */
 
 /**
@@ -96,7 +100,7 @@ int main(void)
   MX_TIM2_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-
+  Motor_Backward(20);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -107,7 +111,11 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	for (uint32_t speed = 0; speed <= 100; speed ++)
+	encoderValue = ReadEncoder();
+	printf("Encoder: %u\r\n", encoderValue);
+	HAL_Delay(50);
+
+	/*for (uint32_t speed = 0; speed <= 100; speed ++)
 	{
 		Motor_Forward(speed);
 		HAL_Delay(100);
@@ -123,7 +131,7 @@ int main(void)
 	}
 
 	Motor_Stop();
-	HAL_Delay(1000);
+	HAL_Delay(1000);*/
   }
   /* USER CODE END 3 */
 }
