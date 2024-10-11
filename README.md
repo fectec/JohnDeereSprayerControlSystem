@@ -25,3 +25,7 @@ In the initial stage, the circuit receives the *reference signal* (desired value
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8d734614-c554-4a87-bc00-cfb34d40f9cc" alt = "Testing Analog PID With Oscilloscope" width="250" height="150"/>
 </p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c54bf791-f1bb-480d-95e6-29f38e368ad9" alt = "Testing Analog PID With Oscilloscope (Reference and Output Signals)" width="300" height="200"/>
+</p>
