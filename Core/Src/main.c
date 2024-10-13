@@ -69,14 +69,16 @@ static void MX_ADC1_Init(void);
 
 uint16_t currentAngle = 0;
 uint16_t previousAngle = 0;
-int16_t totalAngle = 0;
-int16_t rotations = 0;
+int32_t totalAngle = 0;
+int32_t rotations = 0;
 
-// Variables for generating random values and time
+// Variables for generating random values, motor control and time
 
 uint32_t seed = 0xFFFF;	// Seed for the pseudo-random number generator
 uint32_t xo = 0;
+
 uint32_t velocity = 0;
+int8_t adjustedVelocity = 0;
 
 volatile uint32_t msTicks = 0;
 
@@ -147,10 +149,12 @@ int main(void)
 	if (velocity == 0)
 	{
 		Motor_Backward(100);
+		adjustedVelocity = -100;
 	}
 	else
 	{
 		Motor_Forward(100);
+		adjustedVelocity = 100;
 	}
 
 	// Calculate the elapsed time between iterations
@@ -161,7 +165,7 @@ int main(void)
 
 	// Sent data via serial
 
-	printf("%d, %d, %d\r\n", totalAngle, velocity, dt);
+	printf("%ld, %ld, %ld\r\n", adjustedVelocity, totalAngle, dt);
 
 	// Update the previous angle for the next iteration
 
