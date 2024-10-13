@@ -9,6 +9,6 @@ extern TIM_HandleTypeDef htim2;
 
 // Function prototypes
 
-void SetMotorSpeed(uint8_t);
+void SetMotorSpeed(float);
 
 #endif /* INC_SPEED_CONTROL_H_ */

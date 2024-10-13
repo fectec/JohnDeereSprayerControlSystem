@@ -8,7 +8,7 @@
 // Function prototypes
 
 void Motor_Stop(void);
-void Motor_Forward(uint8_t speed);
-void Motor_Backward(uint8_t speed);
+void Motor_Forward(float);
+void Motor_Backward(float);
 
 #endif /* INC_MOTOR_H_ */

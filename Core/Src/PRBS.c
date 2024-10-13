@@ -23,9 +23,9 @@
  *                  number of rotations. This value will be modified by the function.
  */
 
-void detectRotations(uint32_t currentAngle, uint32_t previousAngle, int32_t* rotations)
+void detectRotations(float currentAngle, float previousAngle, int32_t* rotations)
 {
-	int16_t difference = currentAngle - previousAngle;
+	float difference = currentAngle - previousAngle;
 
 	if (difference > 180)
 	{

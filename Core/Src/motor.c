@@ -31,7 +31,7 @@ void Motor_Stop(void)
  * @param speed The speed percentage (0 to 100).
  */
 
-void Motor_Forward(uint8_t speed)
+void Motor_Forward(float speed)
 {
 	// Check if the speed is within the valid range (0 to 100)
 
@@ -56,7 +56,7 @@ void Motor_Forward(uint8_t speed)
  * @param speed The speed percentage (0 to 100).
  */
 
-void Motor_Backward(uint8_t speed)
+void Motor_Backward(float speed)
 {
 	// Check if the speed is within the valid range (0 to 100)
 

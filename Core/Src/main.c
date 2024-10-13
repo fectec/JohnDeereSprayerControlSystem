@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "motor.h"
-#include "encoder.h"
+#include "read.h"
 #include "PRBS.h"
 #include "printf.h"
 /* USER CODE END Includes */
@@ -43,6 +43,7 @@
 
 /* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
+ADC_HandleTypeDef hadc2;
 
 TIM_HandleTypeDef htim2;
 
@@ -58,6 +59,7 @@ static void MX_GPIO_Init(void);
 static void MX_USART2_UART_Init(void);
 static void MX_TIM2_Init(void);
 static void MX_ADC1_Init(void);
+static void MX_ADC2_Init(void);
 /* USER CODE BEGIN PFP */
 
 /* USER CODE END PFP */
@@ -67,24 +69,28 @@ static void MX_ADC1_Init(void);
 
 // Variables for angle measurements and rotations
 
-uint16_t currentAngle = 0;
-uint16_t previousAngle = 0;
-int32_t totalAngle = 0;
+float currentAngle = 0;
+float previousAngle = 0;
+float totalAngle = 0;
 int32_t rotations = 0;
 
-// Variables for generating random values, motor control and time
+// PID control variables
 
-uint32_t seed = 0xFFFF;	// Seed for the pseudo-random number generator
-uint32_t xo = 0;
+float Kp = -0.2333;
+float Ki = -0.7729;
+float Kd = -0.0023;
 
-uint32_t velocity = 0;
-int8_t adjustedVelocity = 0;
+float setpoint = 0;
 
-volatile uint32_t msTicks = 0;
+float input = 0;
+float error = 0, lastError = 0, lastLastError = 0;
+float output = 0, lastOutput = 0, finalOutput = 0;
+
+// Timing control variables
 
 uint32_t previousTime = 0;
 uint32_t currentTime = 0;
-int32_t dt = 0;
+int32_t elapsedTime = 0;
 
 /* USER CODE END 0 */
 
@@ -119,6 +125,7 @@ int main(void)
   MX_USART2_UART_Init();
   MX_TIM2_Init();
   MX_ADC1_Init();
+  MX_ADC2_Init();
   /* USER CODE BEGIN 2 */
   /* USER CODE END 2 */
 
@@ -135,46 +142,61 @@ int main(void)
 
 	currentAngle = ConvertToAngle(ReadEncoder());
 	detectRotations(currentAngle, previousAngle, &rotations);
-	totalAngle = (rotations * 360) + currentAngle;
+	totalAngle = (rotations * 360.0) + currentAngle;
 
-	// Generate a pseudo-random number based on the seed
+	// Read setpoint
 
-	xo = seed ^ (seed >> 3) >> 1;
-	velocity = (xo & 0x0001);
-	seed = (seed >> 1);
-	seed = (seed + (velocity << 31));
+	setpoint = ConvertToAngle(ReadEncoder());
 
-	// Control the motor based on the random speed value
+	// Elapsed time calculation
 
-	if (velocity == 0)
+	currentTime = HAL_GetTick();
+	elapsedTime = currentTime - previousTime;
+
+	// PID calculation
+
+	lastLastError = lastError;
+	lastError = error;
+
+	error = setpoint - totalAngle;
+
+	lastOutput = output;
+
+	output = lastOutput + (Kd / 0.012) * lastLastError + (-Kp - 2.0 * (Kd / 0.012) + (Ki * 0.012)) * lastError + (Kp + (Kd / 0.012)) * error;
+
+	// Limit manipulation inside the range
+
+	if(finalOutput < -100) finalOutput = -100;
+	if(finalOutput > 100) finalOutput = 100;
+
+	// Move the motor with the manipulation
+
+	if(finalOutput < 0)
 	{
-		Motor_Backward(100);
-		adjustedVelocity = -100;
+		Motor_Backward(fabs(finalOutput));
+	}
+	else if(finalOutput > 0)
+	{
+		Motor_Forward(finalOutput);
 	}
 	else
 	{
-		Motor_Forward(100);
-		adjustedVelocity = 100;
+		Motor_Stop();
 	}
 
-	// Calculate the elapsed time between iterations
+	// Pause to smooth the movement
+
+	HAL_Delay(9);
+
+	// Update the previous time for the next iteration
 
 	previousTime = currentTime;
-	currentTime = HAL_GetTick();
-	dt = currentTime - previousTime;
-
-	// Sent data via serial
-
-	printf("%ld, %ld, %ld\r\n", adjustedVelocity, totalAngle, dt);
 
 	// Update the previous angle for the next iteration
 
 	previousAngle = currentAngle;
-
-	// Small pause before the next reading
-
-	HAL_Delay(10);
   }
+
   /* USER CODE END 3 */
 }
 
@@ -267,6 +289,53 @@ static void MX_ADC1_Init(void)
   /* USER CODE BEGIN ADC1_Init 2 */
 
   /* USER CODE END ADC1_Init 2 */
+
+}
+
+/**
+  * @brief ADC2 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_ADC2_Init(void)
+{
+
+  /* USER CODE BEGIN ADC2_Init 0 */
+
+  /* USER CODE END ADC2_Init 0 */
+
+  ADC_ChannelConfTypeDef sConfig = {0};
+
+  /* USER CODE BEGIN ADC2_Init 1 */
+
+  /* USER CODE END ADC2_Init 1 */
+
+  /** Common config
+  */
+  hadc2.Instance = ADC2;
+  hadc2.Init.ScanConvMode = ADC_SCAN_DISABLE;
+  hadc2.Init.ContinuousConvMode = DISABLE;
+  hadc2.Init.DiscontinuousConvMode = DISABLE;
+  hadc2.Init.ExternalTrigConv = ADC_SOFTWARE_START;
+  hadc2.Init.DataAlign = ADC_DATAALIGN_RIGHT;
+  hadc2.Init.NbrOfConversion = 1;
+  if (HAL_ADC_Init(&hadc2) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  /** Configure Regular Channel
+  */
+  sConfig.Channel = ADC_CHANNEL_4;
+  sConfig.Rank = ADC_REGULAR_RANK_1;
+  sConfig.SamplingTime = ADC_SAMPLETIME_1CYCLE_5;
+  if (HAL_ADC_ConfigChannel(&hadc2, &sConfig) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN ADC2_Init 2 */
+
+  /* USER CODE END ADC2_Init 2 */
 
 }
 
