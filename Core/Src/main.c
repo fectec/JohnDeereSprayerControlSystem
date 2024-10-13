@@ -86,6 +86,8 @@ float input = 0;
 float error = 0, lastError = 0, lastLastError = 0;
 float output = 0, lastOutput = 0;
 
+float samplingTime =  0.015;
+
 // Timing control variables
 
 uint32_t previousTime = 0;
@@ -166,7 +168,7 @@ int main(void)
 
 	lastOutput = output;
 
-	output = lastOutput + (Kd / 0.012) * lastLastError + (-Kp - 2.0 * (Kd / 0.012) + (Ki * 0.012)) * lastError + (Kp + (Kd / 0.012)) * error;
+	output = lastOutput + (Kd / samplingTime) * lastLastError + (-Kp - 2.0 * (Kd / samplingTime) + (Ki * samplingTime)) * lastError + (Kp + (Kd / samplingTime)) * error;
 
 	// Limit manipulation inside the range
 
