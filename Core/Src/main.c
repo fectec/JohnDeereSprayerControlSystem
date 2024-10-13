@@ -76,9 +76,9 @@ int32_t rotations = 0;
 
 // PID control variables
 
-float Kp = -0.2333;
-float Ki = -0.7999;
-float Kd = -0.0023;
+float Kp = -0.1840;
+float Ki = -0.3207;
+float Kd = -0.0029;
 
 float setpoint = 0;
 
@@ -137,7 +137,9 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	printf("%f, %f, %f, %d, %f\r\n", totalAngle, setpoint, error, elapsedTime, output);
+	// Debug
+
+	// printf("%f, %f, %f, %d, %f\r\n", totalAngle, setpoint, error, elapsedTime, output);
 
 	// Read the current angle from the sensor and calculate
 	// the total angle considering full rotations
@@ -188,7 +190,7 @@ int main(void)
 
 	// Pause to smooth the movement
 
-	HAL_Delay(9);
+	HAL_Delay(8);
 
 	// Update the previous time for the next iteration
 
