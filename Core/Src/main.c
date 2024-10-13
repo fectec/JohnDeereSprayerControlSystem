@@ -76,9 +76,9 @@ int32_t rotations = 0;
 
 // PID control variables
 
-float Kp = -0.1840;
-float Ki = -0.3207;
-float Kd = -0.0029;
+const float Kp = -0.1840;
+const float Ki = -0.3207;
+const float Kd = -0.0029;
 
 float setpoint = 0;
 
@@ -86,7 +86,7 @@ float input = 0;
 float error = 0, lastError = 0, lastLastError = 0;
 float output = 0, lastOutput = 0;
 
-float samplingTime =  0.015;
+const float samplingTime =  0.015;
 
 // Timing control variables
 
