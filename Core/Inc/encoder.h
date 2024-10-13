@@ -11,5 +11,6 @@ extern ADC_HandleTypeDef hadc1;
 
 uint16_t ReadEncoder(void);
 float ConvertToVoltage(uint16_t);
+uint16_t ConvertToAngle(uint16_t);
 
 #endif /* INC_ENCODER_H_ */

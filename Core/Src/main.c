@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include "motor.h"
 #include "encoder.h"
+#include "PRBS.h"
 #include "printf.h"
 /* USER CODE END Includes */
 
@@ -64,7 +65,24 @@ static void MX_ADC1_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 
-uint16_t encoderValue;
+// Variables for angle measurements and rotations
+
+uint16_t currentAngle = 0;
+uint16_t previousAngle = 0;
+int16_t totalAngle = 0;
+int16_t rotations = 0;
+
+// Variables for generating random values and time
+
+uint32_t seed = 0xFFFF;	// Seed for the pseudo-random number generator
+uint32_t xo = 0;
+uint32_t velocity = 0;
+
+volatile uint32_t msTicks = 0;
+
+uint32_t previousTime = 0;
+uint32_t currentTime = 0;
+int32_t dt = 0;
 
 /* USER CODE END 0 */
 
@@ -100,7 +118,6 @@ int main(void)
   MX_TIM2_Init();
   MX_ADC1_Init();
   /* USER CODE BEGIN 2 */
-  Motor_Backward(20);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -111,27 +128,48 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
-	encoderValue = ReadEncoder();
-	printf("Encoder: %u\r\n", encoderValue);
-	HAL_Delay(50);
+	// Read the current angle from the sensor and calculate
+	// the total angle considering full rotations
 
-	/*for (uint32_t speed = 0; speed <= 100; speed ++)
+	currentAngle = ConvertToAngle(ReadEncoder());				// Read the current angle from the AS5600 sensor
+	detectRotations(currentAngle, previousAngle, &rotations);	// Detect and count full rotations
+	totalAngle = (rotations * 360) + currentAngle;  			// Total angle in degrees
+
+	// Generate a pseudo-random number based on the seed
+
+	xo = seed ^ (seed >> 3) >> 1;
+	velocity = (xo & 0x0001);										// Determine random speed (0 or 1)
+	seed = (seed >> 1);
+	seed = (seed + (velocity << 31));								// Update the seed
+
+	// Control the motor based on the random speed value
+
+	if (velocity == 0)
 	{
-		Motor_Forward(speed);
-		HAL_Delay(100);
+		Motor_Backward(100);
+	}
+	else
+	{
+		Motor_Forward(100);
 	}
 
-	Motor_Stop();
-	HAL_Delay(1000);
+	// Calculate the elapsed time between iterations
 
-	for (uint32_t speed = 0; speed <= 100; speed ++)
-	{
-		Motor_Backward(speed);
-		HAL_Delay(100);
-	}
+	previousTime = currentTime;
+	currentTime = HAL_GetTick();
+	dt = currentTime - previousTime;
 
-	Motor_Stop();
-	HAL_Delay(1000);*/
+	// Sent data via serial
+
+	printf("%d, %d, %d\r\n", totalAngle, velocity, dt);
+
+	// Update the previous angle for the next iteration
+
+	previousAngle = currentAngle;
+
+	// Small pause before the next reading
+
+	HAL_Delay(10);
   }
   /* USER CODE END 3 */
 }
