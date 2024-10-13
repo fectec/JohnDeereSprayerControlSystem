@@ -131,16 +131,16 @@ int main(void)
 	// Read the current angle from the sensor and calculate
 	// the total angle considering full rotations
 
-	currentAngle = ConvertToAngle(ReadEncoder());				// Read the current angle from the AS5600 sensor
-	detectRotations(currentAngle, previousAngle, &rotations);	// Detect and count full rotations
-	totalAngle = (rotations * 360) + currentAngle;  			// Total angle in degrees
+	currentAngle = ConvertToAngle(ReadEncoder());
+	detectRotations(currentAngle, previousAngle, &rotations);
+	totalAngle = (rotations * 360) + currentAngle;
 
 	// Generate a pseudo-random number based on the seed
 
 	xo = seed ^ (seed >> 3) >> 1;
-	velocity = (xo & 0x0001);										// Determine random speed (0 or 1)
+	velocity = (xo & 0x0001);
 	seed = (seed >> 1);
-	seed = (seed + (velocity << 31));								// Update the seed
+	seed = (seed + (velocity << 31));
 
 	// Control the motor based on the random speed value
 
