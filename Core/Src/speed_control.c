@@ -15,7 +15,7 @@
  * @param speed The speed percentage (0 to 100).
  */
 
-void SetMotorSpeed(uint8_t speed)
+void SetMotorSpeed(float speed)
 {
     // Calculate the compare value based on the speed
 

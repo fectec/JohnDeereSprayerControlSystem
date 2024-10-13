@@ -22,7 +22,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "motor.h"
-#include "encoder.h"
+#include "read.h"
 #include "PRBS.h"
 #include "printf.h"
 /* USER CODE END Includes */
@@ -67,24 +67,22 @@ static void MX_ADC1_Init(void);
 
 // Variables for angle measurements and rotations
 
-uint16_t currentAngle = 0;
-uint16_t previousAngle = 0;
-int32_t totalAngle = 0;
+float currentAngle = 0;
+float previousAngle = 0;
+float totalAngle = 0;
 int32_t rotations = 0;
 
 // Variables for generating random values, motor control and time
 
 uint32_t seed = 0xFFFF;	// Seed for the pseudo-random number generator
 uint32_t xo = 0;
-
 uint32_t velocity = 0;
-int8_t adjustedVelocity = 0;
 
-volatile uint32_t msTicks = 0;
+int8_t adjustedVelocity = 0;
 
 uint32_t previousTime = 0;
 uint32_t currentTime = 0;
-int32_t dt = 0;
+uint32_t elapsedTime = 0;
 
 /* USER CODE END 0 */
 
@@ -148,12 +146,12 @@ int main(void)
 
 	if (velocity == 0)
 	{
-		Motor_Backward(100);
+		Motor_Backward(100.0);
 		adjustedVelocity = -100;
 	}
 	else
 	{
-		Motor_Forward(100);
+		Motor_Forward(100.0);
 		adjustedVelocity = 100;
 	}
 
@@ -161,11 +159,11 @@ int main(void)
 
 	previousTime = currentTime;
 	currentTime = HAL_GetTick();
-	dt = currentTime - previousTime;
+	elapsedTime = currentTime - previousTime;
 
 	// Sent data via serial
 
-	printf("%ld, %ld, %ld\r\n", adjustedVelocity, totalAngle, dt);
+	printf("%d, %ld, %ld\r\n", adjustedVelocity, (int32_t) totalAngle, elapsedTime);
 
 	// Update the previous angle for the next iteration
 
