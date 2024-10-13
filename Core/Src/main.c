@@ -77,20 +77,20 @@ int32_t rotations = 0;
 // PID control variables
 
 float Kp = -0.2333;
-float Ki = -0.7729;
+float Ki = -0.7999;
 float Kd = -0.0023;
 
 float setpoint = 0;
 
 float input = 0;
 float error = 0, lastError = 0, lastLastError = 0;
-float output = 0, lastOutput = 0, finalOutput = 0;
+float output = 0, lastOutput = 0;
 
 // Timing control variables
 
 uint32_t previousTime = 0;
 uint32_t currentTime = 0;
-int32_t elapsedTime = 0;
+uint32_t elapsedTime = 0;
 
 /* USER CODE END 0 */
 
@@ -137,6 +137,8 @@ int main(void)
 
     /* USER CODE BEGIN 3 */
 
+	printf("%f, %f, %f, %d, %f\r\n", totalAngle, setpoint, error, elapsedTime, output);
+
 	// Read the current angle from the sensor and calculate
 	// the total angle considering full rotations
 
@@ -146,7 +148,7 @@ int main(void)
 
 	// Read setpoint
 
-	setpoint = ConvertToAngle(ReadEncoder());
+	setpoint = ConvertToAngle(ReadSetpoint());
 
 	// Elapsed time calculation
 
@@ -166,18 +168,18 @@ int main(void)
 
 	// Limit manipulation inside the range
 
-	if(finalOutput < -100) finalOutput = -100;
-	if(finalOutput > 100) finalOutput = 100;
+	if(output < -100) output = -100;
+	if(output > 100) output = 100;
 
 	// Move the motor with the manipulation
 
-	if(finalOutput < 0)
+	if(output < 0)
 	{
-		Motor_Backward(fabs(finalOutput));
+		Motor_Backward(fabs(output));
 	}
-	else if(finalOutput > 0)
+	else if(output > 0)
 	{
-		Motor_Forward(finalOutput);
+		Motor_Forward(output);
 	}
 	else
 	{
