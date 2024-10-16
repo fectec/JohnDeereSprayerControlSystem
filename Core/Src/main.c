@@ -74,15 +74,23 @@ float previousAngle = 0;
 float totalAngle = 0;
 int32_t rotations = 0;
 
+// Average filter variables
+
+#define NUM_READINGS 20
+
+float sumReadings = 0;
+float setpointReadings[NUM_READINGS];
+uint8_t readingIndex = 0;
+bool bufferFull = false;
+
 // PID control variables
+
+float setpoint = 0;
 
 const float Kp = -0.1840;
 const float Ki = -0.3207;
 const float Kd = -0.0029;
 
-float setpoint = 0;
-
-float input = 0;
 float error = 0, lastError = 0, lastLastError = 0;
 float output = 0, lastOutput = 0;
 
@@ -150,9 +158,23 @@ int main(void)
 	detectRotations(currentAngle, previousAngle, &rotations);
 	totalAngle = (rotations * 360.0) + currentAngle;
 
-	// Read setpoint
+	// Apply an average filter to the setpoint
 
-	setpoint = ConvertToAngle(ReadSetpoint());
+	sumReadings -= setpointReadings[readingIndex];						// Substract the oldest reading
+	setpointReadings[readingIndex] = ConvertToAngle(ReadSetpoint());	// Read a new value
+	sumReadings += setpointReadings[readingIndex];						// Add the new reading
+	readingIndex = (readingIndex + 1) % NUM_READINGS;					// Circular index
+
+	if (readingIndex == 0) bufferFull = true;							// Check if the buffer is full to calculate the average
+
+	if (bufferFull)
+	{
+		setpoint = (float) sumReadings / NUM_READINGS;
+	}
+	else
+	{
+		setpoint = (float) sumReadings / (readingIndex + 1);
+	}
 
 	// Elapsed time calculation
 
