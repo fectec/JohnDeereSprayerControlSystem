@@ -75,8 +75,8 @@ int32_t rotations = 0;
 // Variables for generating random values, motor control and time
 
 uint32_t seed = 0xFFFF;	// Seed for the pseudo-random number generator
-uint32_t xo = 0;
-uint32_t velocity = 0;
+uint32_t pseudoRandomNumber = 0;
+uint32_t direction = 0;
 
 int8_t adjustedVelocity = 0;
 
@@ -137,14 +137,14 @@ int main(void)
 
 	// Generate a pseudo-random number based on the seed
 
-	xo = seed ^ (seed >> 3) >> 1;
-	velocity = (xo & 0x0001);
+	pseudoRandomNumber = seed ^ (seed >> 3) >> 1;
+	direction = (pseudoRandomNumber & 0x0001);
 	seed = (seed >> 1);
-	seed = (seed + (velocity << 31));
+	seed = (seed + (direction << 31));
 
 	// Control the motor based on the random speed value
 
-	if (velocity == 0)
+	if (direction == 0)
 	{
 		Motor_Backward(100.0);
 		adjustedVelocity = -100;
