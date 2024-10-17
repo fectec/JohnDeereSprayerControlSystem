@@ -69,3 +69,123 @@ currentAngle = ConvertToAngle(ReadEncoder());
 detectRotations(currentAngle, previousAngle, &rotations);
 totalAngle = (rotations * 360.0) + currentAngle;
 ```
+
+Then, based on a seed, a pseudo-random number is generated, with which the direction of the motor is determined. Once this is done, the seed is updated. This step represents the generation of the PRBS signal, which as specified above, is periodic, given the cyclic nature of the seed.
+
+```c
+pseudoRandomNumber = seed ^ (seed >> 3) >> 1;
+direction = (pseudoRandomNumber & 0x0001);
+seed = (seed >> 1);
+seed = (seed + (direction << 31));
+```
+
+Depending on the direction value, the motor is controlled and the adjusted velocity, i.e. the value that entered the plant, is stored in a variable.If the generated direction was backward, the adjusted velocity is -100 (full speed backward), if the generated direction was forward, the the adjusted velocity is 100 (full speed forward). In other words, this is the operating range of the PID manipulation signal. 
+
+```c
+if (direction == 0)
+{
+	Motor_Backward(100.0);
+	adjustedVelocity = -100;
+}
+else
+{
+	Motor_Forward(100.0);
+	adjustedVelocity = 100;
+}
+```
+
+Subsequently, the iteration time is calculated. To conclude, three data are sent through the serial port to specify the identification: Adjusted speed or input signal (in this case, -100 or 100), the angle derived from such input or output signal (in this case, from 0 to infinity, since it is the total or accumulated angle) and the elapsed time per iteration, which symbolizes the sampling time for the controller.
+
+```c
+previousTime = currentTime;
+currentTime = HAL_GetTick();
+elapsedTime = currentTime - previousTime;
+
+printf("%d, %ld, %ld\r\n", adjustedVelocity, (int32_t) totalAngle, elapsedTime);
+
+previousAngle = currentAngle;
+
+HAL_Delay(10);
+```
+
+A 10 ms delay is placed to add an extra margin of operation for the PID. That is, by increasing the sampling time of the controller, it is guaranteed to operate correctly in the worst case (the longest operating time).
+		
+When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the System Identification app.
+
+Here, the approximate model is estimated as a transfer function, and the number of zeros and poles can be modified. It is possible to export different models, and to create controllers for each one. 
+
+The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). 
+
+Again, the result is exported to the workspace, from where Kp, Kd and Ki are extracted of the tuned PID. Below is the description of the discrete PID code, which uses these constants.
+
+```c
+currentAngle = ConvertToAngle(ReadEncoder());
+detectRotations(currentAngle, previousAngle, &rotations);
+totalAngle = (rotations * 360.0) + currentAngle;
+```
+
+Identical to the PRBS code, the total motor angle is obtained. Now, the setpoint is read, which like the analog PID is given by a potentiometer and its output voltage, which is read by the ADC of the microcontroller and converted to an angle.
+
+An averaging filter was implemented for the setpoint, where up to 20 readings are averaged, using a circular buffer that removes the oldest cost and adds the newest. This is for the purpose of removing noise.
+
+```c
+sumReadings -= setpointReadings[readingIndex];
+setpointReadings[readingIndex] = ConvertToAngle(ReadSetpoint());
+sumReadings += setpointReadings[readingIndex];
+readingIndex = (readingIndex + 1) % NUM_READINGS;				
+
+if (readingIndex == 0) bufferFull = true;					
+
+if (bufferFull)
+{
+setpoint = (float) sumReadings / NUM_READINGS;
+}
+else
+{
+setpoint = (float) sumReadings / (readingIndex + 1);
+}
+```
+
+The elapsed time and the error, which is the subtraction between the setpoint and the total angle, are calculated. Using the discrete-time PID formula, the manipulation signal is determined, which depends on the last output, the error two sampling instants ago, the last error, the current error, the sampling time, Kp, Kd and Ki.
+
+```c
+currentTime = HAL_GetTick();
+elapsedTime = currentTime - previousTime;
+
+lastLastError = lastError;
+lastError = error;
+
+error = setpoint - totalAngle;
+
+lastOutput = output;
+
+output = lastOutput + (Kd / samplingTime) * lastLastError + (-Kp - 2.0 * (Kd / samplingTime) + (Ki * samplingTime)) * lastError + (Kp + (Kd / samplingTime)) * error;
+```
+
+If the manipulation exceeds the set limits (-100 or 100) it is trimmed. We proceed to move the motor with the output signal from the controller. If it is negative, the function to move the motor backwards is called, if it is positive, the function to move the motor forward is called, if it is 0, the motor is stopped.
+
+```c
+if(output < -100) output = -100;
+if(output > 100) output = 100;
+
+if(output < 0)
+{
+	Motor_Backward(fabs(output));
+}
+else if(output > 0)
+{
+	Motor_Forward(output);
+}
+else
+{
+	Motor_Stop();
+}
+```
+
+A pause is added to smooth the actuator motion, and the previous time and angle variables are updated for the next iteration.
+
+```c
+previousTime = currentTime;
+
+previousAngle = currentAngle;
+```
