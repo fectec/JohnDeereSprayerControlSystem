@@ -138,11 +138,11 @@ if (readingIndex == 0) bufferFull = true;
 
 if (bufferFull)
 {
-setpoint = (float) sumReadings / NUM_READINGS;
+	setpoint = (float) sumReadings / NUM_READINGS;
 }
 else
 {
-setpoint = (float) sumReadings / (readingIndex + 1);
+	setpoint = (float) sumReadings / (readingIndex + 1);
 }
 ```
 
