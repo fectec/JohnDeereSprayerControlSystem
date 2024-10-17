@@ -36,7 +36,7 @@ As we can see, the output signal follows closely the reference signal, which mea
   <img src="https://github.com/user-attachments/assets/25caaf8f-be7e-47f5-bdd8-f101287ffd0a" alt = "Analog PID PCB" width="300" height="300"/>
 </p>
 
-# Digital PID Controller
+## Digital PID Controller
 
 For the PID computerization process, first of all, it is necessary to carry out the modeling of the DC motor without knowing its specific parameters, i.e., using *system identification*. A mathematical model of a system must be built through different techniques, since it allows analyzing the performance of a controller on it, however, this is not usually easy. 
 
