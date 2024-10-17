@@ -33,7 +33,11 @@ In the initial stage, the circuit receives the *reference signal* (desired value
 As we can see, the output signal follows closely the reference signal, which means there is little error between them, so the controller is working just fine. Even though the circuit was tested on a breadboard, a *PCB* was also designed.
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/25caaf8f-be7e-47f5-bdd8-f101287ffd0a" alt = "Analog PID PCB" width="300" height="300"/>
+  <img src="https://github.com/user-attachments/assets/25caaf8f-be7e-47f5-bdd8-f101287ffd0a" alt = "Analog PID PCB Model" width="300" height="300"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/b3790c1a-9383-445d-a362-0025b6127c90" alt = "Analog PID PCB" width="300" height="300"/>
 </p>
 
 ## Digital PID Controller
