@@ -75,7 +75,7 @@ seed = (seed >> 1);
 seed = (seed + (direction << 31));
 ```
 
-Depending on the direction value, the motor is controlled and the adjusted velocity, i.e. the value that entered the plant, is stored in a variable.If the generated direction was backward, the adjusted velocity is -100 (full speed backward), if the generated direction was forward, the the adjusted velocity is 100 (full speed forward). In other words, this is the operating range of the PID manipulation signal. 
+Depending on the direction value, the motor is controlled and the adjusted velocity, i.e. the value that entered the plant, is stored in a variable. If the generated direction was backward, the adjusted velocity is -100 (full speed backward), if the generated direction was forward, the the adjusted velocity is 100 (full speed forward). In other words, this is the operating range of the PID manipulation signal. 
 
 ```c
 if (direction == 0)
