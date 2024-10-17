@@ -165,14 +165,14 @@ output = lastOutput + (Kd / samplingTime) * lastLastError + (-Kp - 2.0 * (Kd / s
 If the manipulation exceeds the set limits (-100 or 100) it is trimmed. We proceed to move the motor with the output signal from the controller. If it is negative, the function to move the motor backwards is called, if it is positive, the function to move the motor forward is called, if it is 0, the motor is stopped.
 
 ```c
-if(output < -100) output = -100;
-if(output > 100) output = 100;
+if (output < -100) output = -100;
+if (output > 100) output = 100;
 
-if(output < 0)
+if (output < 0)
 {
 	Motor_Backward(fabs(output));
 }
-else if(output > 0)
+else if (output > 0)
 {
 	Motor_Forward(output);
 }
