@@ -114,7 +114,15 @@ HAL_Delay(10);
 
 A 10 ms delay is placed to add an extra margin of operation for the PID. That is, by increasing the sampling time of the controller, it is guaranteed to operate correctly in the worst case (the longest operating time).
 		
-When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of zeros and poles can be modified. It is possible to export different models, and to create controllers for each one. 
+When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of *zeros* and *poles* can be modified. It is possible to export different models, and to create controllers for each one. 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8cd15713-3fd5-4578-915e-143820f6b4e0" alt = "Python Reading Serial Port" width="300" height="180"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/5c29d9a7-b4a7-42ed-9e1d-c0a1398059cd" alt = "Exporting Data to System Identification App" width="300" height="300"/>
+</p>
 
 The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. Below is the description of the discrete PID code, which uses these constants.
 
