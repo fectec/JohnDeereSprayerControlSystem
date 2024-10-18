@@ -87,9 +87,17 @@ bool bufferFull = false;
 
 float setpoint = 0;
 
-const float Kp = -0.1840;
-const float Ki = -0.3207;
-const float Kd = -0.0029;
+const float Kp_1 = -0.103782950368033;
+const float Ki_1 = -0.229121666259298;
+const float Kd_1 = -0.001447858391792;
+
+const float Kp_2 = -1.880466303571510;
+const float Ki_2 = -5.669717308369763;
+const float Kd_2 = -0.013796924087143;
+
+const float Kp_3 = -0.579787312755866;
+const float Ki_3 = -5.632959772220628;
+const float Kd_3 = -0.005187311753695;
 
 float error = 0, lastError = 0, lastLastError = 0;
 float output = 0, lastOutput = 0;
@@ -149,7 +157,7 @@ int main(void)
 
 	// Debug
 
-	// printf("%f, %f, %f, %d, %f\r\n", totalAngle, setpoint, error, elapsedTime, output);
+	printf("%f, %f, %f, %d, %f\r\n", totalAngle, setpoint, error, elapsedTime, output);
 
 	// Read the current angle from the sensor and calculate
 	// the total angle considering full rotations
@@ -190,7 +198,7 @@ int main(void)
 
 	lastOutput = output;
 
-	output = lastOutput + (Kd / samplingTime) * lastLastError + (-Kp - 2.0 * (Kd / samplingTime) + (Ki * samplingTime)) * lastError + (Kp + (Kd / samplingTime)) * error;
+	output = lastOutput + (Kd_1 / samplingTime) * lastLastError + (-Kp_1 - 2.0 * (Kd_1 / samplingTime) + (Ki_1 * samplingTime)) * lastError + (Kp_1 + (Kd_1 / samplingTime)) * error;
 
 	// Limit manipulation inside the range
 
