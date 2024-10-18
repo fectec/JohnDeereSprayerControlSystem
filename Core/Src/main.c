@@ -87,6 +87,10 @@ bool bufferFull = false;
 
 float setpoint = 0;
 
+const float Kp = -0.215393390576274;
+const float Ki = -0.074650122216263;
+const float Kd = -0.008646731870592;
+
 const float Kp_1 = -0.103782950368033;
 const float Ki_1 = -0.229121666259298;
 const float Kd_1 = -0.001447858391792;
@@ -198,7 +202,7 @@ int main(void)
 
 	lastOutput = output;
 
-	output = lastOutput + (Kd_1 / samplingTime) * lastLastError + (-Kp_1 - 2.0 * (Kd_1 / samplingTime) + (Ki_1 * samplingTime)) * lastError + (Kp_1 + (Kd_1 / samplingTime)) * error;
+	output = lastOutput + (Kd / samplingTime) * lastLastError + (-Kp - 2.0 * (Kd / samplingTime) + (Ki * samplingTime)) * lastError + (Kp + (Kd / samplingTime)) * error;
 
 	// Limit manipulation inside the range
 
