@@ -117,19 +117,19 @@ A 10 ms delay is placed to add an extra margin of operation for the PID. That is
 When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of *zeros* and *poles* can be modified. It is possible to export different models, and to create controllers for each one. 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/1b8a735f-74ab-4285-bfea-b3e33034dc50" alt = "Exporting Data To System Identification App" width="300" height="265"/>
+  <img src="https://github.com/user-attachments/assets/1b8a735f-74ab-4285-bfea-b3e33034dc50" alt = "Exporting Data To System Identification App" width="500" height="420"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4b7cf1c2-4669-4b3b-be67-b322d3df179a" alt = "Estimating Transfer Function Model" width="300" height="400"/>
+  <img src="https://github.com/user-attachments/assets/4b7cf1c2-4669-4b3b-be67-b322d3df179a" alt = "Estimating Transfer Function Model" width="500" height="600"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/62702187-32d4-4e90-a3a0-c1e49562c638" alt = "Transfer Function Models" width="300" height="265"/>
+  <img src="https://github.com/user-attachments/assets/62702187-32d4-4e90-a3a0-c1e49562c638" alt = "Transfer Function Models" width="500" height="420"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9ebfecc4-216a-4f0f-84d2-a036c4e994c1" alt = "Transfer Function Models Accuracy" width="300" height="265"/>
+  <img src="https://github.com/user-attachments/assets/9ebfecc4-216a-4f0f-84d2-a036c4e994c1" alt = "Transfer Function Models Accuracy" width="500" height="420"/>
 </p>
 
 The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. Below is the description of the discrete PID code, which uses these constants.
