@@ -37,8 +37,7 @@ As we can see, the output signal follows closely the reference signal, which mea
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/8989e06f-5b84-41d0-a209-9a25ec5dccc0" alt = "Analog PID PCB" width="300" height="180"/>
-</p>
+  <img src="https://github.com/user-attachments/assets/89f89972-e9fc-4157-9c29-223d8cb35f64" alt = "Analog PID PCB" width="300" height="180"/>
 
 ## Digital PID Controller
 
@@ -47,6 +46,10 @@ For the PID computerization process, first of all, it is necessary to carry out 
 Here lies the importance of generating an approximate mathematical model when analyzing an unknown system, which can describe it by means of an experimental approach, which consists of introducing a certain input signal and detecting the output of the device. To optimize a good parameter identification system, the input signal must have the capacity to contain a wide range of frequencies that facilitate the identification of the entire spectrum of plant dynamics.
 
 In this case, this is achieved by means of a *PRBS* (*Pseudo-Random Binary Sequence*) input, a periodic and deterministic signal with properties similar to white noise, in the sense that it changes between two values. Thus, capturing the dynamics of the system with the help of PRBS is more efficient, since it comprises both positive and negative changes within the input sequence. 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8749c2ac-4104-4de0-bf5c-70d8bc2c49f8" alt = "PRBS" width="300" height="180"/>
+</p>
 
 Closed-loop identification methods require the application of excitation signals at the process inputs in such a way as to produce changes in the process outputs. The resulting additional variations in the outputs are subject to compromise. They must be large enough to produce persistent excitation for identification, but also disturb as little as possible the normal operation of the process. 
 
@@ -57,6 +60,10 @@ To reiterate, since there will be both positive and negative changes in the inpu
 So the physical arrangement consists of the DC motor, connected to the motor output of the H-bridge L298N, which in turn is powered by a 6V DC power supply. IN1, IN2 and PWM are connected to the STM32F103RB microcontroller included in the NUCLEO-F103RB development board.
 
 Therefore, the role of the MCU in the PRBS identification and digital controller is to generate the input or manipulation signal for the motor. Finally, the AS5600 magnetic encoder is in charge of capturing the actuator output, being read by an ADC. 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/0810cce3-0f88-45ff-aacd-770d19f6da28" alt = "Digital PID" width="300" height="180"/>
+</p>
 
 Here is a description of the main code in C (taking advantage of the abstractions provided by the functions). First, the ADC value is read from the encoder and converted to an angle, indicating the value of that variable for the current position of the motor shaft. By comparing the current angle with the past angle (stored in a variable), the complete rotations (360°) performed by the motor are counted. The total angle (from the time the code starts running) is calculated by multiplying the number of rotations plus the current angle.
 
@@ -106,7 +113,27 @@ HAL_Delay(10);
 
 A 10 ms delay is placed to add an extra margin of operation for the PID. That is, by increasing the sampling time of the controller, it is guaranteed to operate correctly in the worst case (the longest operating time).
 		
-When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of zeros and poles can be modified. It is possible to export different models, and to create controllers for each one. 
+When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of *zeros* and *poles* can be modified. It is possible to export different models, and to create controllers for each one. 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/6589cba0-738c-45c3-8065-649297ac3791" alt = "Exporting Data To System Identification App" width="500" height="380"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/4b7cf1c2-4669-4b3b-be67-b322d3df179a" alt = "Estimating Transfer Function Model" width="500" height="580"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/62702187-32d4-4e90-a3a0-c1e49562c638" alt = "Transfer Function Models" width="500" height="300"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/9ebfecc4-216a-4f0f-84d2-a036c4e994c1" alt = "Transfer Function Models Accuracy" width="500" height="300"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/881b156b-a2d2-4d81-8858-33acf2977f6d" alt = "Transfer Function Models Transient Responses" width="500" height="300"/>
+</p>
 
 The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. Below is the description of the discrete PID code, which uses these constants.
 
