@@ -120,15 +120,15 @@ When performing the PRBS test, a Python script is run that collects data from th
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4b7cf1c2-4669-4b3b-be67-b322d3df179a" alt = "Estimating Transfer Function Model" width="500" height="580"/>
+  <img src="https://github.com/user-attachments/assets/eb278457-96fc-4ad6-bc66-5db742ef01f9" alt = "Estimating Transfer Function Model" width="500" height="580"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/62702187-32d4-4e90-a3a0-c1e49562c638" alt = "Transfer Function Models" width="500" height="300"/>
+  <img src="https://github.com/user-attachments/assets/714a42f8-c627-4256-b0af-252bee96ce17" alt = "Transfer Function Models" width="500" height="300"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/9ebfecc4-216a-4f0f-84d2-a036c4e994c1" alt = "Transfer Function Models Accuracy" width="500" height="300"/>
+  <img src="https://github.com/user-attachments/assets/6b60632c-784a-45a8-af64-d669355ae619" alt = "Transfer Function Models Accuracy" width="500" height="300"/>
 </p>
 
 The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. 
