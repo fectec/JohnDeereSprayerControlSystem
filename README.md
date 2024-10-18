@@ -125,7 +125,7 @@ When performing the PRBS test, a Python script is run that collects data from th
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/62702187-32d4-4e90-a3a0-c1e49562c638" alt = "Transfer Function Models" width="500" height="340"/>
+  <img src="https://github.com/user-attachments/assets/62702187-32d4-4e90-a3a0-c1e49562c638" alt = "Transfer Function Models" width="500" height="300"/>
 </p>
 
 <p align="center">
