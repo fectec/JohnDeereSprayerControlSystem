@@ -57,7 +57,7 @@ This procedure can also be applied to design the open-loop experiment. Pseudo-ra
 
 To reiterate, since there will be both positive and negative changes in the input for both the identification and the controller, the DC motor is required to be able to rotate in two directions. For this purpose, an *L298N driver* was used. The latter has three pins for rotation control: *IN1*, *IN2* and *PWM*. If IN1 and IN2 are low, the motor stops. If IN1 is high and IN2 is low, the motor turns forward. If IN1 is low and IN2 is high, the motor rotates backwards. The speed is dictated by the PWM input.
 
-So the physical arrangement consists of the DC motor, connected to the motor output of the H-bridge L298N, which in turn is powered by a 6V DC power supply. IN1, IN2 and PWM are connected to the STM32F103RB microcontroller included in the NUCLEO-F103RB development board.
+So the physical arrangement consists of the DC motor, connected to the motor output of the H-bridge L298N, which in turn is powered by a DC power supply. IN1, IN2 and PWM are connected to the STM32F103RB microcontroller included in the NUCLEO-F103RB development board.
 
 Therefore, the role of the MCU in the PRBS identification and digital controller is to generate the input or manipulation signal for the motor. Finally, the AS5600 magnetic encoder is in charge of capturing the actuator output, being read by an ADC. 
 
@@ -113,7 +113,7 @@ HAL_Delay(10);
 
 A 10 ms delay is placed to add an extra margin of operation for the PID. That is, by increasing the sampling time of the controller, it is guaranteed to operate correctly in the worst case (the longest operating time).
 		
-When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of *zeros* and *poles* can be modified. It is possible to export different models, and to create controllers for each one. 
+When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a *.csv* file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of *zeros* and *poles* can be modified. It is possible to export different models, and to create controllers for each one. 
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/6589cba0-738c-45c3-8065-649297ac3791" alt = "Exporting Data To System Identification App" width="500" height="380"/>
