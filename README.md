@@ -137,15 +137,7 @@ The transfer function is then entered into the PID Tuner application, which is u
   <img src="https://github.com/user-attachments/assets/66f6c0ac-a6cf-49ca-956b-fd8deefe5fa3" alt = "Transfer Function Models Transient Responses" width="500" height="300"/>
 </p>
 
-Below is the description of the discrete PID code, which uses these constants.
-
-```c
-currentAngle = ConvertToAngle(ReadEncoder());
-detectRotations(currentAngle, previousAngle, &rotations);
-totalAngle = (rotations * 360.0) + currentAngle;
-```
-
-Identical to the PRBS code, the total motor angle is obtained. Now, the setpoint is read, which like the analog PID is given by a potentiometer and its output voltage, which is read by the ADC of the microcontroller and converted to an angle. An averaging filter was implemented for the setpoint, where up to 20 readings are averaged, using a circular buffer that removes the oldest cost and adds the newest. This is for the purpose of removing noise.
+Below is the description of the discrete PID code, which uses these constants. Identical to the PRBS code, the total motor angle is obtained. Now, the setpoint is read, which like the analog PID is given by a potentiometer and its output voltage, which is read by the ADC of the microcontroller and converted to an angle. An averaging filter was implemented for the setpoint, where up to 20 readings are averaged, using a circular buffer that removes the oldest cost and adds the newest. This is for the purpose of removing noise.
 
 ```c
 sumReadings -= setpointReadings[readingIndex];
