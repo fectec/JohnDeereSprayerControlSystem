@@ -87,21 +87,31 @@ bool bufferFull = false;
 
 float setpoint = 0;
 
-const float Kp = -0.215393390576274;
-const float Ki = -0.074650122216263;
-const float Kd = -0.008646731870592;
+const float Kp = -1.039966403870214;
+const float Ki = -4.959425433419722;
+const float Kd = -0.034733498159463;
 
-const float Kp_1 = -0.103782950368033;
-const float Ki_1 = -0.229121666259298;
-const float Kd_1 = -0.001447858391792;
+/*
 
-const float Kp_2 = -1.880466303571510;
-const float Ki_2 = -5.669717308369763;
-const float Kd_2 = -0.013796924087143;
+// Good PID
 
-const float Kp_3 = -0.579787312755866;
-const float Ki_3 = -5.632959772220628;
-const float Kd_3 = -0.005187311753695;
+const float Kp = -1.039966403870214;
+const float Ki = -4.959425433419722;
+const float Kd = -0.034733498159463;
+
+// Mid PID
+
+const float Kp = -0.136508053666377;
+const float Ki = -0.274237269562137;
+const float Kd = -0.004712110883267;
+
+// Bad PID
+
+const float Kp = -0.067365919047418;
+const float Ki = -0.097378384380969;
+const float Kd = -0.005420369029048;
+
+*/
 
 float error = 0, lastError = 0, lastLastError = 0;
 float output = 0, lastOutput = 0;
@@ -161,7 +171,7 @@ int main(void)
 
 	// Debug
 
-	printf("%f, %f, %f, %d, %f\r\n", totalAngle, setpoint, error, elapsedTime, output);
+	printf("%f, %f, %d\r\n", totalAngle, setpoint, elapsedTime);
 
 	// Read the current angle from the sensor and calculate
 	// the total angle considering full rotations
