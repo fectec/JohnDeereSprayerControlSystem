@@ -117,7 +117,7 @@ A 10 ms delay is placed to add an extra margin of operation for the PID. That is
 When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a .csv file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of *zeros* and *poles* can be modified. It is possible to export different models, and to create controllers for each one. 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/868df203-379c-498f-a09b-16c6a00d832c" alt = "Python Reading Serial Port" width="300" height="120"/>
+  <img src="https://github.com/user-attachments/assets/868df203-379c-498f-a09b-16c6a00d832c" alt = "Python Reading Serial Port" width="300" height="100"/>
 </p>
 
 <p align="center">
