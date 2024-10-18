@@ -65,7 +65,7 @@ Therefore, the role of the MCU in the PRBS identification and digital controller
   <img src="https://github.com/user-attachments/assets/0810cce3-0f88-45ff-aacd-770d19f6da28" alt = "Digital PID" width="300" height="180"/>
 </p>
 
-Here is a description of the main code in C (taking advantage of the abstractions provided by the functions). First, the ADC value is read from the encoder and converted to an angle, indicating the value of that variable for the current position of the motor shaft. By comparing the current angle with the past angle (stored in a variable), the complete rotations (360°) performed by the motor are counted. The total angle (from the time the code starts running) is calculated by multiplying the number of rotations plus the current angle.
+Here is a description of the main code in *C* (taking advantage of the abstractions provided by the functions). First, the ADC value is read from the encoder and converted to an angle, indicating the value of that variable for the current position of the motor shaft. By comparing the current angle with the past angle (stored in a variable), the complete rotations (360°) performed by the motor are counted. The total angle (from the time the code starts running) is calculated by multiplying the number of rotations plus the current angle.
 
 ```c
 currentAngle = ConvertToAngle(ReadEncoder());
