@@ -204,7 +204,11 @@ previousAngle = currentAngle;
 
 The model with the best fit and the best transient response was the one with 2 poles and a zero. 
 
+<div align="center">
+	
 $`\frac{-0.2852 z^{-1}}{1 - 1.776 z^{-1} + 0.7759 z^{-2}}`$
+
+</div>
 
 Thus, it was used to design three PID controllers, one good, one moderately good and one bad, in order to compare performances. 
 
