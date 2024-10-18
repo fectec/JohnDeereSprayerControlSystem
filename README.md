@@ -134,7 +134,7 @@ When performing the PRBS test, a Python script is run that collects data from th
 The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/461b0483-117b-449c-89d6-37b889a59cb5" width="500" height="300"/>
+  <img src="https://github.com/user-attachments/assets/39246dc7-9910-4224-a8c6-74d7996f51b6" width="500" height="300"/>
 </p>!
 
 Below is the description of the discrete PID code, which uses these constants. Identical to the PRBS code, the total motor angle is obtained. Now, the setpoint is read, which like the analog PID is given by a potentiometer and its output voltage, which is read by the ADC of the microcontroller and converted to an angle. An averaging filter was implemented for the setpoint, where up to 20 readings are averaged, using a circular buffer that removes the oldest cost and adds the newest. This is for the purpose of removing noise.
