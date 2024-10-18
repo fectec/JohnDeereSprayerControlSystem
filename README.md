@@ -135,7 +135,7 @@ The transfer function is then entered into the PID Tuner application, which is u
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/39246dc7-9910-4224-a8c6-74d7996f51b6" width="500" height="300"/>
-</p>!
+</p>
 
 Below is the description of the discrete PID code, which uses these constants. Identical to the PRBS code, the total motor angle is obtained. Now, the setpoint is read, which like the analog PID is given by a potentiometer and its output voltage, which is read by the ADC of the microcontroller and converted to an angle. An averaging filter was implemented for the setpoint, where up to 20 readings are averaged, using a circular buffer that removes the oldest cost and adds the newest. This is for the purpose of removing noise.
 
@@ -200,3 +200,12 @@ previousTime = currentTime;
 
 previousAngle = currentAngle;
 ```
+## Results
+
+The model with the best fit and the best transient response was the one with 2 poles and a zero. 
+
+$`\frac{-0.2852 z^{-1}}{1 - 1.776 z^{-1} + 0.7759 z^{-2}}`$
+
+Thus, it was used to design three PID controllers, one good, one moderately good and one bad, in order to compare performances. 
+
+
