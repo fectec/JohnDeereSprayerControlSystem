@@ -48,6 +48,10 @@ Here lies the importance of generating an approximate mathematical model when an
 
 In this case, this is achieved by means of a *PRBS* (*Pseudo-Random Binary Sequence*) input, a periodic and deterministic signal with properties similar to white noise, in the sense that it changes between two values. Thus, capturing the dynamics of the system with the help of PRBS is more efficient, since it comprises both positive and negative changes within the input sequence. 
 
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/8749c2ac-4104-4de0-bf5c-70d8bc2c49f8" alt = "PRBS" width="300" height="180"/>
+</p>
+
 Closed-loop identification methods require the application of excitation signals at the process inputs in such a way as to produce changes in the process outputs. The resulting additional variations in the outputs are subject to compromise. They must be large enough to produce persistent excitation for identification, but also disturb as little as possible the normal operation of the process. 
 
 This procedure can also be applied to design the open-loop experiment. Pseudo-random binary sequences are often used as excitation signals for identification proposals, since they have a finite length that can be synthesized repeatedly with simple generators, while exhibiting favorable spectra. The spectrum at low frequencies is flat and constant, at high frequencies it falls, consequently it has a specific bandwidth that can be used to excite the processes at the required frequencies.
