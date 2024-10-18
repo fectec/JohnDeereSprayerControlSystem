@@ -37,8 +37,7 @@ As we can see, the output signal follows closely the reference signal, which mea
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/8989e06f-5b84-41d0-a209-9a25ec5dccc0" alt = "Analog PID PCB" width="300" height="180"/>
-</p>
+  <img src="https://github.com/user-attachments/assets/89f89972-e9fc-4157-9c29-223d8cb35f64" alt = "Analog PID PCB" width="300" height="180"/>
 
 ## Digital PID Controller
 
