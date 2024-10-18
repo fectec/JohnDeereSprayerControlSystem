@@ -134,7 +134,7 @@ When performing the PRBS test, a Python script is run that collects data from th
 The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. 
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/66f6c0ac-a6cf-49ca-956b-fd8deefe5fa3" alt = "Transfer Function Models Transient Responses" width="500" height="300"/>
+  <img src="https://github.com/user-attachments/assets/ecf61127-8183-4d4e-ab06-2a59faae5c4d" width="500" height="300"/>
 </p>
 
 Below is the description of the discrete PID code, which uses these constants. Identical to the PRBS code, the total motor angle is obtained. Now, the setpoint is read, which like the analog PID is given by a potentiometer and its output voltage, which is read by the ADC of the microcontroller and converted to an angle. An averaging filter was implemented for the setpoint, where up to 20 readings are averaged, using a circular buffer that removes the oldest cost and adds the newest. This is for the purpose of removing noise.
