@@ -121,11 +121,11 @@ When performing the PRBS test, a Python script is run that collects data from th
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/1b8a735f-74ab-4285-bfea-b3e33034dc50" alt = "Exporting Data To System Identification App" width="300" height="300"/>
+  <img src="https://github.com/user-attachments/assets/1b8a735f-74ab-4285-bfea-b3e33034dc50" alt = "Exporting Data To System Identification App" width="265" height="300"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/4b7cf1c2-4669-4b3b-be67-b322d3df179a" alt = "Estimating Transfer Function Model" width="300" height="600"/>
+  <img src="https://github.com/user-attachments/assets/4b7cf1c2-4669-4b3b-be67-b322d3df179a" alt = "Estimating Transfer Function Model" width="300" height="420"/>
 </p>
 
 The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. Below is the description of the discrete PID code, which uses these constants.
