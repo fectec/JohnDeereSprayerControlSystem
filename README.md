@@ -135,7 +135,13 @@ When performing the PRBS test, a Python script is run that collects data from th
   <img src="https://github.com/user-attachments/assets/881b156b-a2d2-4d81-8858-33acf2977f6d" alt = "Transfer Function Models Transient Responses" width="500" height="300"/>
 </p>
 
-The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. Below is the description of the discrete PID code, which uses these constants.
+The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. 
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/66f6c0ac-a6cf-49ca-956b-fd8deefe5fa3" alt = "Transfer Function Models Transient Responses" width="500" height="300"/>
+</p>
+
+Below is the description of the discrete PID code, which uses these constants.
 
 ```c
 currentAngle = ConvertToAngle(ReadEncoder());
