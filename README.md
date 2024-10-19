@@ -10,7 +10,7 @@ The **John Deere Sprayer Control System** is a computerized irrigation managemen
 
 ## PID Controller using Analog Electronics
 
-As a first approach before computerization, a PID controller was implemented using analog electronics. The physical configuration consists of a *12V DC motor* placed on a 3D-printed base that allows aligning its rotation axis in front of an *AS5600 magnetic encoder*, in order to know the position of the shaft and close the loop.
+As a first approach before computerization, a PID controller was implemented using analog electronics. The physical configuration consists of a **12V DC motor** placed on a 3D-printed base that allows aligning its rotation axis in front of an **AS5600 magnetic encoder**, in order to know the position of the shaft and close the loop.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/a7d2a1ad-4e19-43e9-a170-1fcfd81d4bbb" alt = "Base 3D Model" width="150" height="150"/>
@@ -20,7 +20,7 @@ As a first approach before computerization, a PID controller was implemented usi
   <img src="https://github.com/user-attachments/assets/30881e0d-5c65-45e7-87dd-a92824c35ff9" alt = "Analog PID Schematic"/>
 </p>
 
-In the initial stage, the circuit receives the *reference signal* (desired value, adjusted with a potentiometer) and the signal coming from the encoder (*feedback*, output of the system). Both are subtracted to obtain the *error signal*, which is then fed to the PID. The *proportional gain* is intended to correct the current error, the *integral gain* to eliminate the error accumulated over time, and the *derivative gain* to anticipate future errors and smooth the system response. These three terms are summed to generate a fine-tuned control signal that feeds the motor. Finally, the *output signal* feeds back to the comparator, thus closing the loop. 
+In the initial stage, the circuit receives the **reference signal** (desired value, adjusted with a potentiometer) and the signal coming from the encoder (**feedback**, output of the system). Both are subtracted to obtain the **error signal**, which is then fed to the PID. The **proportional gain** is intended to correct the current error, the **integral gain** to eliminate the error accumulated over time, and the **derivative gain** to anticipate future errors and smooth the system response. These three terms are summed to generate a fine-tuned control signal that feeds the motor. Finally, the **output signal** feeds back to the comparator, thus closing the loop. 
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8d734614-c554-4a87-bc00-cfb34d40f9cc" alt = "Testing Analog PID With Oscilloscope" width="300" height="180"/>
@@ -30,7 +30,7 @@ In the initial stage, the circuit receives the *reference signal* (desired value
   <img src="https://github.com/user-attachments/assets/c54bf791-f1bb-480d-95e6-29f38e368ad9" alt = "Testing Analog PID With Oscilloscope (Reference and Output Signals)" width="300" height="150"/>
 </p>
 
-As we can see, the output signal follows closely the reference signal, which means there is little error between them, so the controller is working just fine. Even though the circuit was tested on a breadboard, a *PCB* was also designed.
+As we can see, the output signal follows closely the reference signal, which means there is little error between them, so the controller is working just fine. Even though the circuit was tested on a breadboard, a **PCB** was also designed.
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/25caaf8f-be7e-47f5-bdd8-f101287ffd0a" alt = "Analog PID PCB Model" width="300" height="300"/>
@@ -41,11 +41,11 @@ As we can see, the output signal follows closely the reference signal, which mea
 
 ## Digital PID Controller
 
-For the PID computerization process, first of all, it is necessary to carry out the modeling of the DC motor without knowing its specific parameters, i.e., using *system identification*. A mathematical model of a system must be built through different techniques, since it allows analyzing the performance of a controller on it, however, this is not usually easy. 
+For the PID computerization process, first of all, it is necessary to carry out the modeling of the DC motor without knowing its specific parameters, i.e., using **system identification**. A mathematical model of a system must be built through different techniques, since it allows analyzing the performance of a controller on it, however, this is not usually easy. 
 
 Here lies the importance of generating an approximate mathematical model when analyzing an unknown system, which can describe it by means of an experimental approach, which consists of introducing a certain input signal and detecting the output of the device. To optimize a good parameter identification system, the input signal must have the capacity to contain a wide range of frequencies that facilitate the identification of the entire spectrum of plant dynamics.
 
-In this case, this is achieved by means of a *PRBS* (*Pseudo-Random Binary Sequence*) input, a periodic and deterministic signal with properties similar to white noise, in the sense that it changes between two values. Thus, capturing the dynamics of the system with the help of PRBS is more efficient, since it comprises both positive and negative changes within the input sequence. 
+In this case, this is achieved by means of a **PRBS** (*Pseudo-Random Binary Sequence*) input, a periodic and deterministic signal with properties similar to white noise, in the sense that it changes between two values. Thus, capturing the dynamics of the system with the help of PRBS is more efficient, since it comprises both positive and negative changes within the input sequence. 
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8749c2ac-4104-4de0-bf5c-70d8bc2c49f8" alt = "PRBS" width="300" height="180"/>
@@ -55,7 +55,7 @@ Closed-loop identification methods require the application of excitation signals
 
 This procedure can also be applied to design the open-loop experiment. Pseudo-random binary sequences are often used as excitation signals for identification proposals, since they have a finite length that can be synthesized repeatedly with simple generators, while exhibiting favorable spectra. The spectrum at low frequencies is flat and constant, at high frequencies it falls, consequently it has a specific bandwidth that can be used to excite the processes at the required frequencies.
 
-To reiterate, since there will be both positive and negative changes in the input for both the identification and the controller, the DC motor is required to be able to rotate in two directions. For this purpose, an *L298N driver* was used. The latter has three pins for rotation control: *IN1*, *IN2* and *PWM*. If IN1 and IN2 are low, the motor stops. If IN1 is high and IN2 is low, the motor turns forward. If IN1 is low and IN2 is high, the motor rotates backwards. The speed is dictated by the PWM input.
+To reiterate, since there will be both positive and negative changes in the input for both the identification and the controller, the DC motor is required to be able to rotate in two directions. For this purpose, an **L298N driver** was used. The latter has three pins for rotation control: **IN1**, **IN2** and **PWM**. If IN1 and IN2 are low, the motor stops. If IN1 is high and IN2 is low, the motor turns forward. If IN1 is low and IN2 is high, the motor rotates backwards. The speed is dictated by the PWM input.
 
 So the physical arrangement consists of the DC motor, connected to the motor output of the H-bridge L298N, which in turn is powered by a DC power supply. IN1, IN2 and PWM are connected to the STM32F103RB microcontroller included in the NUCLEO-F103RB development board.
 
@@ -65,7 +65,7 @@ Therefore, the role of the MCU in the PRBS identification and digital controller
   <img src="https://github.com/user-attachments/assets/0810cce3-0f88-45ff-aacd-770d19f6da28" alt = "Digital PID" width="500" height="280"/>
 </p>
 
-Here is a description of the main code in *C* (taking advantage of the abstractions provided by the functions). First, the ADC value is read from the encoder and converted to an angle, indicating the value of that variable for the current position of the motor shaft. By comparing the current angle with the past angle (stored in a variable), the complete rotations (360°) performed by the motor are counted. The total angle (from the time the code starts running) is calculated by multiplying the number of rotations plus the current angle.
+Here is a description of the main code in **C** (taking advantage of the abstractions provided by the functions). First, the ADC value is read from the encoder and converted to an angle, indicating the value of that variable for the current position of the motor shaft. By comparing the current angle with the past angle (stored in a variable), the complete rotations (360°) performed by the motor are counted. The total angle (from the time the code starts running) is calculated by multiplying the number of rotations plus the current angle.
 
 ```c
 currentAngle = ConvertToAngle(ReadEncoder());
@@ -113,7 +113,7 @@ HAL_Delay(10);
 
 A 10 ms delay is placed to add an extra margin of operation for the PID. That is, by increasing the sampling time of the controller, it is guaranteed to operate correctly in the worst case (the longest operating time).
 		
-When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a *.csv* file. These are entered as workspace variables in MATLAB and exported to the *System Identification* app. Here, the approximate model is estimated as a transfer function, and the number of *zeros* and *poles* can be modified. It is possible to export different models, and to create controllers for each one. 
+When performing the PRBS test, a Python script is run that collects data from the serial port and stores it in a **.csv** file. These are entered as workspace variables in MATLAB and exported to the **System Identification** app. Here, the approximate model is estimated as a transfer function, and the number of **zeros** and **poles** can be modified. It is possible to export different models, and to create controllers for each one. 
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/6589cba0-738c-45c3-8065-649297ac3791" alt = "Exporting Data To System Identification App" width="500" height="380"/>
@@ -131,7 +131,7 @@ When performing the PRBS test, a Python script is run that collects data from th
   <img src="https://github.com/user-attachments/assets/6b60632c-784a-45a8-af64-d669355ae619" alt = "Transfer Function Models Accuracy" width="500" height="300"/>
 </p>
 
-The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where *Kp*, *Kd* and *Ki* are extracted of the tuned PID. 
+The transfer function is then entered into the PID Tuner application, which is used to generate the PID controller (with the possibility of choosing between other types, such as PI and PD) by altering parameters such as Response Time (slower or faster) or Transient Behavior (more aggressive or more robust). Again, the result is exported to the workspace, from where **Kp**, **Kd** and **Ki** are extracted of the tuned PID. 
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/39246dc7-9910-4224-a8c6-74d7996f51b6" width="500" height="300"/>
@@ -202,7 +202,7 @@ previousAngle = currentAngle;
 ```
 ## Results
 
-The model with the best fit and the best transient response was the one with *2 poles and a zero*. 
+The model with the best fit and the best transient response was the one with **2 poles and a zero**. 
 
 <div align="center">
 	
@@ -210,7 +210,7 @@ $`\frac{-0.2852 z^{-1}}{1 - 1.776 z^{-1} + 0.7759 z^{-2}}`$
 
 </div>
 
-Thus, it was used to design three PID controllers, one good, one moderately good and one bad, in order to compare performances. The good one is fast and presents a small overshoot (*rise time of 0.039 seconds*, *settling time of 0.234 seconds*, *overshoot of 8.92%*). The average one is slower and has more overshoot (rise time of 0.494 seconds, settling time of 3.82 seconds, overshoot of 10.4%). The bad one, although not slower than the previous one, presents the highest overshoot (rise time of 0.273 seconds, settling time of 1.81 seconds, overshoot of 12.7%), and despite being stable, experimentally it was found that it never reaches the reference, unlike the average one.
+Thus, it was used to design three PID controllers, one good, one moderately good and one bad, in order to compare performances. The good one is fast and presents a small overshoot (**rise time of 0.039 seconds**, **settling time of 0.234 seconds**, **overshoot of 8.92%**). The average one is slower and has more overshoot (rise time of 0.494 seconds, settling time of 3.82 seconds, overshoot of 10.4%). The bad one, although not slower than the previous one, presents the highest overshoot (rise time of 0.273 seconds, settling time of 1.81 seconds, overshoot of 12.7%), and despite being stable, experimentally it was found that it never reaches the reference, unlike the average one.
 
 Here we can see the operation of the best controller tested:
 
