@@ -1,4 +1,4 @@
-![Video sin título ‐ Hecho con Clipchamp (1)](https://github.com/user-attachments/assets/50c02e1f-44a9-49fd-81bd-5e2484bc3de2)# John Deere Sprayer Control System
+# John Deere Sprayer Control System
 
 Main project in collaboration with *John Deere* for the undergrad course “**Analysis of Control Systems**”, which delves mainly into *Classic and Modern Control*.
 
@@ -215,9 +215,9 @@ Thus, it was used to design three PID controllers, one good, one moderately good
 Here we can see the operation of the best controller tested:
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/361ffd9d-6ee0-4376-9d6d-583276372179" alt = "Good PID Controller Test 1" width="300" height="120"/>
+  <img src="https://github.com/user-attachments/assets/361ffd9d-6ee0-4376-9d6d-583276372179" alt = "Good PID Controller Test 1" width="300" height="220"/>
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/c9fded5e-680f-4ca4-9c45-68dbad669563" alt = "Good PID Controller Test 1" width="300" height="120"/>
+  <img src="https://github.com/user-attachments/assets/c9fded5e-680f-4ca4-9c45-68dbad669563" alt = "Good PID Controller Test 1" width="300" height="220"/>
 </p>
