@@ -45,7 +45,7 @@ For the PID computerization process, first of all, it is necessary to carry out 
 
 Here lies the importance of generating an approximate mathematical model when analyzing an unknown system, which can describe it by means of an experimental approach, which consists of introducing a certain input signal and detecting the output of the device. To optimize a good parameter identification system, the input signal must have the capacity to contain a wide range of frequencies that facilitate the identification of the entire spectrum of plant dynamics.
 
-In this case, this is achieved by means of a **PRBS** (*Pseudo-Random Binary Sequence*) input, a periodic and deterministic signal with properties similar to white noise, in the sense that it changes between two values. Thus, capturing the dynamics of the system with the help of PRBS is more efficient, since it comprises both positive and negative changes within the input sequence. 
+In this case, this is achieved by means of a **PRBS** (**Pseudo-Random Binary Sequence**) input, a periodic and deterministic signal with properties similar to white noise, in the sense that it changes between two values. Thus, capturing the dynamics of the system with the help of PRBS is more efficient, since it comprises both positive and negative changes within the input sequence. 
 
 <p align="center">
   <img src="https://github.com/user-attachments/assets/8749c2ac-4104-4de0-bf5c-70d8bc2c49f8" alt = "PRBS" width="300" height="180"/>
