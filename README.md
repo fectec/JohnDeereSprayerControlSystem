@@ -202,7 +202,7 @@ previousAngle = currentAngle;
 ```
 ## Results
 
-The model with the best fit and the best transient response was the one with 2 poles and a zero. 
+The model with the best fit and the best transient response was the one with *2 poles and a zero*. 
 
 <div align="center">
 	
@@ -210,7 +210,7 @@ $`\frac{-0.2852 z^{-1}}{1 - 1.776 z^{-1} + 0.7759 z^{-2}}`$
 
 </div>
 
-Thus, it was used to design three PID controllers, one good, one moderately good and one bad, in order to compare performances. The good one is fast and presents a small overshoot (rise time of 0.039 seconds, settling time of 0.234 seconds, overshoot of 8.92%). The average one is slower and has more overshoot (rise time of 0.494 seconds, settling time of 3.82 seconds, overshoot of 10.4%). The bad one, although not slower than the previous one, presents the highest overshoot (rise time of 0.273 seconds, settling time of 1.81 seconds, overshoot of 12.7%), and despite being stable, experimentally it was found that it never reaches the reference, unlike the average one.
+Thus, it was used to design three PID controllers, one good, one moderately good and one bad, in order to compare performances. The good one is fast and presents a small overshoot (*rise time of 0.039 seconds*, *settling time of 0.234 seconds*, *overshoot of 8.92%*). The average one is slower and has more overshoot (rise time of 0.494 seconds, settling time of 3.82 seconds, overshoot of 10.4%). The bad one, although not slower than the previous one, presents the highest overshoot (rise time of 0.273 seconds, settling time of 1.81 seconds, overshoot of 12.7%), and despite being stable, experimentally it was found that it never reaches the reference, unlike the average one.
 
 Here we can see the operation of the best controller tested:
 
