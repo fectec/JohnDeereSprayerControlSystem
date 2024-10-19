@@ -1,4 +1,4 @@
-# John Deere Sprayer Control System
+![Video sin título ‐ Hecho con Clipchamp (1)](https://github.com/user-attachments/assets/50c02e1f-44a9-49fd-81bd-5e2484bc3de2)# John Deere Sprayer Control System
 
 Main project in collaboration with *John Deere* for the undergrad course “**Analysis of Control Systems**”, which delves mainly into *Classic and Modern Control*.
 
@@ -212,3 +212,12 @@ $`\frac{-0.2852 z^{-1}}{1 - 1.776 z^{-1} + 0.7759 z^{-2}}`$
 
 Thus, it was used to design three PID controllers, one good, one moderately good and one bad, in order to compare performances. The good one is fast and presents a small overshoot (rise time of 0.039 seconds, settling time of 0.234 seconds, overshoot of 8.92%). The average one is slower and has more overshoot (rise time of 0.494 seconds, settling time of 3.82 seconds, overshoot of 10.4%). The bad one, although not slower than the previous one, presents the highest overshoot (rise time of 0.273 seconds, settling time of 1.81 seconds, overshoot of 12.7%), and despite being stable, experimentally it was found that it never reaches the reference, unlike the average one.
 
+Here we can see the operation of the best controller tested:
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/361ffd9d-6ee0-4376-9d6d-583276372179" alt = "Good PID Controller Test 1" width="500" height="280"/>
+</p>
+
+<p align="center">
+  <img src="https://github.com/user-attachments/assets/c9fded5e-680f-4ca4-9c45-68dbad669563" alt = "Good PID Controller Test 1" width="500" height="280"/>
+</p>
